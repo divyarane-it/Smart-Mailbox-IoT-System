@@ -46,24 +46,6 @@ The Smart Mailbox Notification System helps monitor incoming mail without manual
 
 Both buttons use the ESP32's internal `INPUT_PULLUP` configuration.
 
-### System Architecture Diagram
-
-```mermaid
-flowchart TD
-    A["New Mail Button<br/>GPIO 4"]
-    B["Mark as Read Button<br/>GPIO 5"]
-    C["ESP32 Microcontroller"]
-    D["Wi-Fi Connection"]
-    E["ThingSpeak Cloud"]
-    F["Web Dashboard"]
-
-    A --> C
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-```
-
 ## ☁️ ThingSpeak Configuration
 
 **Channel ID:** `3549905`
@@ -87,6 +69,24 @@ The dashboard displays:
 - Last updated time
 - Manual refresh option
 - Automatic refresh every 20 seconds
+
+### System Architecture Diagram
+
+```mermaid
+flowchart TD
+    A["New Mail Button<br/>GPIO 4"]
+    B["Mark as Read Button<br/>GPIO 5"]
+    C["ESP32 Microcontroller"]
+    D["Wi-Fi Connection"]
+    E["ThingSpeak Cloud"]
+    F["Web Dashboard"]
+
+    A --> C
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+```
 
 🌐 **Live Dashboard:**  
 https://divyarane-it.github.io/Smart-Mailbox-IoT-System/
