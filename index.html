@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Mailbox | IoT Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f3f6fb;
+      color: #172033;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #14213d;
+      color: white;
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      font-size: 30px;
+    }
+
+    header h1 {
+      font-size: 20px;
+    }
+
+    header p {
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-top: 5px;
+    }
+
+    .live-label {
+      background: #1e3a5f;
+      padding: 9px 15px;
+      border-radius: 30px;
+      font-size: 12px;
+      color: #86efac;
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: 40px auto;
+      padding: 0 22px;
+    }
+
+    .welcome {
+      margin-bottom: 28px;
+    }
+
+    .welcome h2 {
+      font-size: 27px;
+      margin-bottom: 9px;
+    }
+
+    .welcome p {
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .status-panel {
+      background: white;
+      border-radius: 14px;
+      padding: 19px 22px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 3px 15px rgba(20, 33, 61, 0.04);
+    }
+
+    .status-text {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #f59e0b;
+    }
+
+    .dot.online {
+      background: #22c55e;
+    }
+
+    .dot.offline {
+      background: #ef4444;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 3px 15px rgba(20, 33, 61, 0.04);
+      border: 1px solid #e9eef5;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+    }
+
+    .blue { background: #e8f0ff; }
+    .orange { background: #fff1df; }
+    .green { background: #e2f8ec; }
+
+    .card-label {
+      font-size: 14px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .card h3 {
+      font-size: 38px;
+      font-weight: 800;
+      margin-top: 8px;
+    }
+
+    .card-note {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 10px;
+    }
+
+    .details {
+      background: white;
+      margin-top: 25px;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 3px 15px rgba(20, 33, 61, 0.04);
+    }
+
+    .details h3 {
+      font-size: 17px;
+      margin-bottom: 20px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 13px 0;
+      border-bottom: 1px solid #edf1f6;
+      font-size: 13px;
+      gap: 15px;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-row span:first-child {
+      color: #64748b;
+    }
+
+    .detail-row span:last-child {
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .refresh-button {
+      border: none;
+      background: #2563eb;
+      color: white;
+      padding: 11px 17px;
+      border-radius: 9px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .refresh-button:hover {
+      background: #1d4ed8;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px 15px;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+
+    @media (max-width: 750px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        margin-top: 28px;
+      }
+
+      .welcome h2 {
+        font-size: 23px;
+      }
+
+      header {
+        padding: 20px 5%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">📬</div>
+      <div>
+        <h1>Smart Mailbox</h1>
+        <p>IoT Notification & Monitoring System</p>
+      </div>
+    </div>
+
+    <div class="live-label">● LIVE DASHBOARD</div>
+  </header>
+
+  <main class="container">
+
+    <section class="welcome">
+      <h2>Mailbox Overview</h2>
+      <p>Monitor incoming mail and track read and unread messages in real time.</p>
+    </section>
+
+    <section class="status-panel">
+      <div class="status-text">Mailbox Monitoring Status</div>
+
+      <div class="status-indicator">
+        <span class="dot" id="statusDot"></span>
+        <span id="connectionStatus">Connecting to ThingSpeak...</span>
+      </div>
+    </section>
+
+    <section class="cards">
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon blue">📨</div>
+        </div>
+        <div class="card-label">Total Mail</div>
+        <h3 id="totalMail">--</h3>
+        <div class="card-note">All received messages</div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon orange">📩</div>
+        </div>
+        <div class="card-label">Unread Mail</div>
+        <h3 id="unreadMail">--</h3>
+        <div class="card-note">Messages waiting to be read</div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon green">✅</div>
+        </div>
+        <div class="card-label">Read Mail</div>
+        <h3 id="readMail">--</h3>
+        <div class="card-note">Messages already read</div>
+      </div>
+
+    </section>
+
+    <section class="details">
+      <h3>System Information</h3>
+
+      <div class="detail-row">
+        <span>Mailbox Status</span>
+        <span id="mailboxStatus">Waiting for data</span>
+      </div>
+
+      <div class="detail-row">
+        <span>Cloud Platform</span>
+        <span>ThingSpeak IoT</span>
+      </div>
+
+      <div class="detail-row">
+        <span>Channel ID</span>
+        <span>3549905</span>
+      </div>
+
+      <div class="detail-row">
+        <span>Last Updated</span>
+        <span id="lastUpdated">Not updated yet</span>
+      </div>
+
+      <div class="detail-row">
+        <span>Next Automatic Refresh</span>
+        <span>Every 20 seconds</span>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <button class="refresh-button" onclick="fetchMailboxData()">
+          ↻ Refresh Data
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    Smart Mailbox Notification System · ESP32 + Wokwi + ThingSpeak
+    <br><br>
+    Developed as an IoT Academic Project
+  </footer>
+
+  <script>
+    const CHANNEL_ID = "3549905";
+
+    // For a private ThingSpeak channel, enter its READ API KEY here.
+    // For a public channel, leave this empty.
+    const READ_API_KEY = "M32N40MX4UBNTU01";
+
+    const API_URL =
+      `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds/last.json` +
+      (READ_API_KEY ? `?api_key=${READ_API_KEY}` : "");
+
+    async function fetchMailboxData() {
+      const status = document.getElementById("connectionStatus");
+      const dot = document.getElementById("statusDot");
+
+      status.textContent = "Updating...";
+      dot.className = "dot";
+
+      try {
+        const response = await fetch(API_URL, { cache: "no-store" });
+
+        if (!response.ok) {
+          throw new Error("ThingSpeak request failed");
+        }
+
+        const data = await response.json();
+
+        if (data.field1 === null || data.field1 === undefined) {
+          throw new Error("No mailbox data available");
+        }
+
+        const total = Number(data.field1);
+        const unread = Number(data.field2);
+        const read = Number(data.field3);
+
+        if (![total, unread, read].every(Number.isFinite)) {
+          throw new Error("Invalid mailbox data");
+        }
+
+        document.getElementById("totalMail").textContent = total;
+        document.getElementById("unreadMail").textContent = unread;
+        document.getElementById("readMail").textContent = read;
+
+        document.getElementById("mailboxStatus").textContent =
+          unread > 0 ? "New mail waiting" : "All mail is read";
+
+        document.getElementById("lastUpdated").textContent =
+          data.created_at
+            ? new Date(data.created_at).toLocaleString()
+            : "Unavailable";
+
+        status.textContent = "Connected to ThingSpeak";
+        dot.className = "dot online";
+
+      } catch (error) {
+        console.error("Dashboard error:", error);
+
+        status.textContent = "Connection failed";
+        dot.className = "dot offline";
+        document.getElementById("mailboxStatus").textContent =
+          "Unable to retrieve data";
+      }
+    }
+
+    fetchMailboxData();
+    setInterval(fetchMailboxData, 20000);
+  </script>
+
+</body>
+</html>
